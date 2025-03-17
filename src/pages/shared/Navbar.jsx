@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext/AuthContext';
+import jonIcon from '../../assets/jobs-logo.png'
+
 
 const Navbar = () => {
+
+    const { user, logOut } = useContext(AuthContext);
     const links = <>
-        <li><NavLink>Submenu 1</NavLink></li>
-        <li><NavLink>Submenu 2</NavLink></li>
-        
+        <li><NavLink to={'/'}>Home</NavLink></li>
+        <li><NavLink to={'/myApplications'}>MY Applications</NavLink></li>
     </>
+
+    const signOut = () => {
+        logOut()
+            .then(() => {
+                console.log('successful sign Out')
+            })
+            .catch(error => {
+                console.log('failed to signOut', error)
+            })
+    }
+
     return (
         <div>
             <div className="navbar bg-base-100 shadow-sm">
@@ -18,10 +33,12 @@ const Navbar = () => {
                         <ul
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                           {links}
+                            {links}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost text-xl">daisyUI</a>
+                    <div className='w-12 cursor-pointer'>
+                        <img src={jonIcon} alt="" />
+                    </div>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
@@ -29,8 +46,14 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                   <Link className='btn' to={'/register'}>Register</Link>
-                   <Link className='btn' to={'login'}>login</Link>
+                    {
+                        user ? <button onClick={signOut} className='btn'>LogOut</button> : <>
+                            <Link className='btn' to={'/register'}>Register</Link>
+                            <Link className='btn' to={'login'}>login</Link>
+                        </>
+
+                    }
+
                 </div>
             </div>
         </div>

@@ -1,6 +1,11 @@
 import Lottie from "lottie-react";
 import registerLottieData from '../../assets/lottie/register.json';
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext/AuthContext";
 const Register = () => {
+
+    const { createUser } = useContext(AuthContext);
+
     const handleRegister = e => {
         e.preventDefault();
         const form = e.target;
@@ -11,17 +16,23 @@ const Register = () => {
 
         // password validation 
         if (passwordRegex.test(password)) {
-            console.log('success')
+            createUser(email, password)
+            .then(result => {
+                console.log(result.user)
+            })
+            .catch(error =>{
+                console.log(error.code)
+            })
         }
         else{
-            return;
+            console.log('password must one uppercase & one letter & at least 6 char')
         }
     }
     return (
         <div>
-            <div className="hero bg-base-200 min-h-screen">
+            <div className="hero bg-base-200 min-h-[calc(100vh-70px)]">
                 <div className="hero-content flex-col lg:flex-row-reverse">
-                    <div className="text-center lg:text-left w-96">
+                    <div className="text-center lg:text-left w-[500px]">
                         <Lottie animationData={registerLottieData}></Lottie>
                     </div>
                     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl p-5">
@@ -29,11 +40,10 @@ const Register = () => {
                         <form onSubmit={handleRegister} className="card-body">
                             <fieldset className="fieldset">
                                 <label className="fieldset-label">Email</label>
-                                <input name="email" type="email" className="input" placeholder="Email" />
+                                <input name="email" type="email" className="input text-xl" placeholder="Email" />
                                 <label className="fieldset-label">Password</label>
-                                <input name="password" type="password" className="input" placeholder="Password" />
-                                <div><a className="link link-hover">Forgot password?</a></div>
-                                <button className="btn btn-neutral mt-4">Register</button>
+                                <input name="password" type="password" className="input text-xl" placeholder="Password" />
+                                <button className="btn btn-neutral mt-4 text-xl">Register</button>
                             </fieldset>
                         </form>
                     </div>
