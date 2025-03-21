@@ -11,6 +11,7 @@ const Navbar = () => {
         <li><NavLink to={'/'}>Home</NavLink></li>
         <li><NavLink to={'/myApplications'}>MY Applications</NavLink></li>
         <li><NavLink to={'/addJob'}>Add Job</NavLink></li>
+        <li><NavLink to={'/myPostedJobs'}>My Posted Jobs</NavLink></li>
     </>
 
     const signOut = () => {
