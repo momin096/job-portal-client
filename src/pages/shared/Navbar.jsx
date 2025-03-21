@@ -10,6 +10,7 @@ const Navbar = () => {
     const links = <>
         <li><NavLink to={'/'}>Home</NavLink></li>
         <li><NavLink to={'/myApplications'}>MY Applications</NavLink></li>
+        <li><NavLink to={'/addJob'}>Add Job</NavLink></li>
     </>
 
     const signOut = () => {
