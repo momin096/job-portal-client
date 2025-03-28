@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const MyApplications = () => {
     const { user } = useAuth();
     const [jobs, setJobs] = useState([])
-
+    const axiosSecure = useAxiosSecure();
     useEffect(() => {
         // fetch(`http://localhost:3000/job-application?email=${user.email}`)
         //     .then(res => res.json())
         //     .then(data => setJobs(data))
 
-        axios.get(`http://localhost:3000/job-application?email=${user.email}`, { withCredentials: true })
+        // axios.get(`http://localhost:3000/job-application?email=${user.email}`, { withCredentials: true })
+        //     .then(res => setJobs(res.data))
+
+        axiosSecure.get(`/job-application?email=${user.email}`)
             .then(res => setJobs(res.data))
 
     }, [user.email])
     return (
         <div>
-            <h2 className="text4xl">My Applications : ({jobs.length})</h2>
+            <h2 className="text-xl">My Applications : ({jobs.length})</h2>
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
@@ -30,7 +33,7 @@ const MyApplications = () => {
                             </th>
                             <th>Name</th>
                             <th>Job</th>
-                            <th>Favorite Color</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -63,11 +66,14 @@ const MyApplications = () => {
                                     <br />
                                     <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
                                 </td>
-                                <td>Purple</td>
+                                <td>
+
+                                </td>
                                 <th>
                                     <button className="btn btn-ghost btn-xs">details</button>
                                 </th>
-                            </tr>)
+                            </tr>
+                            )
                         }
                     </tbody>
                 </table>
